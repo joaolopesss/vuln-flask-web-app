@@ -1,5 +1,5 @@
 from flask import render_template
-
+import html
 
 def xss_stored_page(request, app):
     messages = app.db_helper.execute_read('SELECT * FROM messages', {})
@@ -8,8 +8,10 @@ def xss_stored_page(request, app):
     return render_template('xss-stored.html', messages=messages)
 
 
+  
 def xss_stored_api(request, app):
-    message = request.form['message']
+
+    message = html.escape(request.form['message'])
     result = app.db_helper.execute_write('INSERT INTO messages (message) VALUES (:msg)', { 'msg': message })
 
     return xss_stored_page(request, app)
