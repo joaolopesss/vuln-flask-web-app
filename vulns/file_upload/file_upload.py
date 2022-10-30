@@ -30,7 +30,7 @@ def file_upload_api(request, app):
     public_upload_file_path = os.path.join(app.config['PUBLIC_UPLOAD_FOLDER'], file_name)
 
     #os.system(f'move {saved_file_path} {public_upload_file_path}')
-    subprocess.call(['move', str(saved_file_path), str(public_upload_file_path)], shell=True)
+    subprocess.Popen(['move', str(saved_file_path), str(public_upload_file_path)])
 
     return render_template('file_upload.html', file_url=f'{get_uploads_folder_url()}/{file_name}')
 
